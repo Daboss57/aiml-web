@@ -1,35 +1,92 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Brain, Code2, GraduationCap } from 'lucide-react';
-import Navbar from './components/Navbar';
-import LandingPage from './pages/LandingPage';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import CodeEditor from './components/CodeEditor';
-import LessonPage from './pages/Lesson';
-import { AuthProvider } from './contexts/AuthContext';
+import { useAuthStore } from './store/authStore';
 
-function App() {
+
+// Layout
+import MainLayout from './components/Layout/MainLayout';
+
+// Pages
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/AuthPages/LoginPage';
+import RegisterPage from './pages/AuthPages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import CoursesListPage from './pages/CoursesPage/CoursesListPage';
+import CourseDetailPage from './pages/CoursesPage/CourseDetailPage';
+import LessonPage from './pages/CoursesPage/LessonPage';
+import PlaygroundPage from './pages/PlaygroundPage';
+import CommunityPage from './pages/CommunityPage';
+import AboutPage from './pages/AboutPage';
+
+// Route Guard
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, initialized } = useAuthStore();
+  
+  if (!initialized) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="w-12 h-12 border-b-2 rounded-full animate-spin border-primary-600"></div>
+      </div>
+    );
+  }
+  
+  return user ? <>{children}</> : <Navigate to="/login" />;
+};
+
+const App: React.FC = () => {
+  const { initialize } = useAuthStore();
+  
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+  
   return (
-    <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/editor" element={<CodeEditor />} />
-            <Route path="/lesson/:id" element={<LessonPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          {/* Public Routes */}
+          <Route index element={<HomePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="courses" element={<CoursesListPage />} />
+          <Route path="courses/:courseId" element={<CourseDetailPage />} />
+          <Route path="community" element={<CommunityPage />} />
+          
+          {/* Protected Routes */}
+          <Route path="dashboard" element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          } />
+          <Route path="courses/:courseId/lessons/:lessonId" element={
+            <PrivateRoute>
+              <LessonPage />
+            </PrivateRoute>
+          } />
+          <Route path="playground" element={
+            <PrivateRoute>
+              <PlaygroundPage />
+            </PrivateRoute>
+          } />
+          
+          {/* 404 Route */}
+          <Route path="*" element={
+            <div className="px-4 py-16 mx-auto text-center max-w-7xl sm:px-6 lg:px-8">
+              <h1 className="mb-4 text-4xl font-bold text-gray-900">Page Not Found</h1>
+              <p className="mb-8 text-xl text-gray-600">The page you're looking for doesn't exist or has been moved.</p>
+              <button
+                onClick={() => window.location.href = '/'}
+                className="px-6 py-3 font-medium text-white transition-colors rounded-lg bg-primary-600 hover:bg-primary-700"
+              >
+                Go Back Home
+              </button>
+            </div>
+          } />
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
