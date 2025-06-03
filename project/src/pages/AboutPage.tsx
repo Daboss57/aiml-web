@@ -5,6 +5,7 @@ import Card, { CardContent } from '../components/ui/Card';
 import storyImg from '../assets/images/story.png';
 import noelImg from '../assets/images/noel.png';
 import aryanImg from '../assets/images/aryan2.jpg';
+import nishuImg from '../assets/images/nishu.jpg';
 
 const AboutPage: React.FC = () => {
   const team = [
@@ -12,14 +13,20 @@ const AboutPage: React.FC = () => {
       name: 'Noel Bobby',
       role: 'Co-Founder & CTO',
       bio: 'Senior at Kimball High School, majoring in Biomedical Engineering with a passion for AI and robotics.',
-      image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      image: noelImg,
     },
     {
       name: 'Aryan Mishra',
       role: 'Co-Founder & Marketing Director',
       bio: 'Senior at Kimball High School, aspiring to major in Computer Science with a passion for AI and creative technology',
-      image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      image: aryanImg,
     },
+    {
+      name: 'Nishanth Birru',
+      role: 'Mentor',
+      bio: 'Senior at Kimball High School, aspiring to become a doctor, with a passion for mentoring students in AI.',
+      image: nishuImg,
+    }
   ];
   
   const values = [
@@ -110,7 +117,7 @@ const AboutPage: React.FC = () => {
           {team.map((member, index) => (
             <Card key={index} className="h-full">
               <img 
-                src={member.name === 'Noel Bobby' ? noelImg : aryanImg}
+                src={member.image}
                 loading="lazy"
                 alt={member.name} 
                 className="object-cover object-center w-full h-64"
