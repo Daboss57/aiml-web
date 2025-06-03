@@ -17,6 +17,7 @@ import LessonPage from './pages/CoursesPage/LessonPage';
 import PlaygroundPage from './pages/PlaygroundPage';
 import CommunityPage from './pages/CommunityPage';
 import AboutPage from './pages/AboutPage';
+import ProjectDetailPage from './pages/CommunityPage/ProjectDetailPage'
 
 // Route Guard
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -52,6 +53,7 @@ const App: React.FC = () => {
           <Route path="courses" element={<CoursesListPage />} />
           <Route path="courses/:courseId" element={<CourseDetailPage />} />
           <Route path="community" element={<CommunityPage />} />
+          <Route path="community/projects/:projectId" element={<ProjectDetailPage />} />
           
           {/* Protected Routes */}
           <Route path="dashboard" element={
@@ -69,6 +71,7 @@ const App: React.FC = () => {
               <PlaygroundPage />
             </PrivateRoute>
           } />
+          
           
           {/* 404 Route */}
           <Route path="*" element={

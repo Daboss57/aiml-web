@@ -135,7 +135,7 @@ const AboutPage: React.FC = () => {
           <Button 
             variant="accent"
             size="lg"
-            onClick={() => window.location.href = '/register'}
+            onClick={() => window.open('https://forms.gle/GE8BfVh3RP9fSLvd9', '_blank')}
           >
             Join NexusAI
           </Button>
@@ -144,7 +144,7 @@ const AboutPage: React.FC = () => {
             size="lg"
             icon={<Mail size={18} />}
             className="text-white bg-transparent border-white hover:bg-white hover:text-primary-700"
-            onClick={() => window.location.href = 'mailto:info@nexusai.edu'}
+            onClick={() => window.open('https://forms.gle/amfXX2L841YbVUMB7', '_blank')}
           >
             Contact Us
           </Button>

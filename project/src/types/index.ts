@@ -71,3 +71,7 @@ export interface Comment {
   content: string;
   created_at: string;
 }
+
+export interface PublicProject extends Project {
+  profiles: User;
+}

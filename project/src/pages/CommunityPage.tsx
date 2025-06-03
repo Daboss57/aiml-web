@@ -91,12 +91,7 @@ const CommunityPage: React.FC = () => {
               key={project.id} 
               project={project}
               // In a real app, we'd fetch user info for each project
-              user={{
-                id: project.user_id,
-                email: 'user@example.com',
-                full_name: 'Sample User',
-                created_at: new Date().toISOString()
-              }}
+              user={project.profiles}
             />
           ))}
         </div>
