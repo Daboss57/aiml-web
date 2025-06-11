@@ -21,12 +21,7 @@ const AboutPage: React.FC = () => {
       bio: 'Senior at Kimball High School, aspiring to major in Computer Science with a passion for AI and creative technology',
       image: aryanImg,
     },
-    {
-      name: 'Nishanth Birru',
-      role: 'Mentor',
-      bio: 'Senior at Kimball High School, aspiring to become a doctor, with a passion for mentoring students in AI.',
-      image: nishuImg,
-    }
+    
   ];
   
   const values = [
